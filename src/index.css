@@ -3040,3 +3040,142 @@ body {
     padding: 16px;
   }
 } 
+
+/* Alert Action Button */
+.alert-action {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: hsl(var(--accent));
+  color: hsl(var(--accent-foreground));
+  border: 1px solid hsl(var(--border));
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.alert-action:hover {
+  background: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+}
+
+/* Alert Details */
+.alert-details {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(245, 158, 11, 0.2);
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.details-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.detail-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background: rgba(245, 158, 11, 0.05);
+  border-radius: 8px;
+  border: 1px solid rgba(245, 158, 11, 0.1);
+  transition: all 0.2s ease;
+}
+
+.detail-item:hover {
+  background: rgba(245, 158, 11, 0.1);
+  transform: translateX(4px);
+}
+
+.detail-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.detail-fornecedor {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: hsl(var(--foreground));
+}
+
+.detail-value {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #f59e0b;
+}
+
+.detail-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  text-align: right;
+}
+
+.detail-days {
+  font-size: 0.75rem;
+  color: hsl(var(--muted-foreground));
+  font-weight: 500;
+}
+
+.detail-parcelas {
+  font-size: 0.7rem;
+  color: hsl(var(--muted-foreground));
+  background: rgba(245, 158, 11, 0.1);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.detail-more {
+  text-align: center;
+  padding: 8px;
+  font-size: 0.8rem;
+  color: hsl(var(--muted-foreground));
+  font-style: italic;
+}
+
+/* Responsive Alert Details */
+@media (max-width: 768px) {
+  .detail-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  .detail-meta {
+    align-items: flex-start;
+    text-align: left;
+    flex-direction: row;
+    gap: 8px;
+  }
+  
+  .alert-card {
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .alert-action {
+    align-self: flex-start;
+  }
+} 
+

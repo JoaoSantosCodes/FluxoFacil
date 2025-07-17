@@ -35,6 +35,7 @@ import SettingsTab from './components/SettingsTab';
 import LoadersTab from './components/LoadersTab';
 import Logo from './components/Logo';
 import ConnectionStatus from './components/ConnectionStatus';
+import Footer from './components/Footer';
 
 type TabType =
   | 'dashboard'
@@ -986,6 +987,9 @@ const App: React.FC = () => {
           </div>
         )}
         </div>
+        
+        {/* Footer */}
+        <Footer />
       </div>
         </RecebidosProvider>
       </ContasProvider>

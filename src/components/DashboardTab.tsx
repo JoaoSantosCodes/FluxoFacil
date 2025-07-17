@@ -26,6 +26,7 @@ const DashboardTab: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedPeriod, setSelectedPeriod] = useState('month');
+  const [showAlertDetails, setShowAlertDetails] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -304,10 +305,50 @@ const DashboardTab: React.FC = () => {
               <div className="alert-content">
                 <h4>Contas vencem em breve</h4>
                 <p>{contasVencemBreve.length} conta(s) vence(m) nos próximos 7 dias</p>
+                
+                {showAlertDetails && (
+                  <div className="alert-details">
+                    <div className="details-list">
+                      {contasVencemBreve.slice(0, 5).map((conta, index) => {
+                        const dataVencimento = new Date(conta.data_vencimento);
+                        const hoje = new Date();
+                        const diffTime = dataVencimento.getTime() - hoje.getTime();
+                        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                        
+                        return (
+                          <div key={conta.id} className="detail-item">
+                            <div className="detail-info">
+                              <span className="detail-fornecedor">{conta.fornecedor}</span>
+                              <span className="detail-value">
+                                {conta.valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+                              </span>
+                            </div>
+                            <div className="detail-meta">
+                              <span className="detail-days">
+                                {diffDays === 0 ? 'Vence hoje' : `Vence em ${diffDays} dia${diffDays > 1 ? 's' : ''}`}
+                              </span>
+                              {conta.parcelas > 1 && (
+                                <span className="detail-parcelas">Parcela {conta.parcelas}</span>
+                              )}
+                            </div>
+                          </div>
+                        );
+                      })}
+                      {contasVencemBreve.length > 5 && (
+                        <div className="detail-more">
+                          <span>... e mais {contasVencemBreve.length - 5} conta(s)</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
               </div>
-              <button className="alert-action">
+              <button 
+                className="alert-action"
+                onClick={() => setShowAlertDetails(!showAlertDetails)}
+              >
                 <Eye size={16} />
-                Ver detalhes
+                {showAlertDetails ? 'Mostrar menos' : 'Ver detalhes'}
               </button>
             </div>
           </div>
