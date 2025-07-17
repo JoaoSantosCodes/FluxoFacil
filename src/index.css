@@ -221,6 +221,8 @@ body {
 /* App Container */
 .app-container {
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
   padding: 24px 0;
 }
 
@@ -710,6 +712,7 @@ body {
 
 /* Content area adjustment */
 .content-area {
+  flex: 1;
   min-height: 400px;
   padding: 24px;
   padding-bottom: 40px;
