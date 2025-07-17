@@ -1,0 +1,49 @@
+{
+  "name": "fluxofacil",
+  "version": "1.0.0",
+  "description": "FluxoFácil - Sistema de gestão financeira,",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "test:db": "ts-node --project tsconfig.node.json database/test.ts",
+    "test:db:run": "ts-node --project tsconfig.node.json database/run-test.ts",
+    "api": "node database/server.cjs",
+    "seed": "node database/seed.cjs",
+    "dev:full": "concurrently \"npm run api\" \"npm run dev\""
+  },
+  "dependencies": {
+    "@tabler/icons-react": "^3.34.0",
+    "better-sqlite3": "^12.2.0",
+    "clsx": "^2.1.1",
+    "cors": "^2.8.5",
+    "date-fns": "^2.30.0",
+    "express": "^5.1.0",
+    "framer-motion": "^12.23.6",
+    "lucide-react": "^0.263.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "sqlite3": "^5.1.7",
+    "tailwind-merge": "^3.3.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/forms": "^0.5.10",
+    "@tailwindcss/postcss": "^4.1.11",
+    "@tailwindcss/typography": "^0.5.16",
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.3",
+    "@types/react": "^18.2.15",
+    "@types/react-dom": "^18.2.7",
+    "@vitejs/plugin-react": "^4.0.3",
+    "autoprefixer": "^10.4.21",
+    "concurrently": "^9.2.0",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.11",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.0.2",
+    "vite": "^4.4.5"
+  }
+}
