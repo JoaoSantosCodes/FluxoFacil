@@ -1,49 +1,57 @@
 import React from 'react';
 
 interface LogoProps {
-  size?: number; // largura em px
+  size?: number; // largura do ícone em px
   showText?: boolean;
   className?: string;
+  textSizeClass?: string;
 }
 
-const Logo: React.FC<LogoProps> = ({ size = 120, showText = true, className = '' }) => {
-  const height = size / 3; // proporção 3:1
+// Proporção do SVG original: 3:1
+const Logo: React.FC<LogoProps> = ({ size = 140, showText = true, className = '', textSizeClass = 'text-3xl md:text-4xl' }) => {
+  const height = size / 3;
   return (
-    <div className={`flex items-center gap-2 ${className}`} style={{ minHeight: height }}>
+    <div className={`flex items-center gap-4 ${className}`} style={{ minHeight: height }}>
       <svg
         width={size}
         height={height}
-        viewBox="0 0 180 60"
+        viewBox="0 0 160 50"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        style={{
-          display: 'block',
-        }}
+        style={{ display: 'block' }}
       >
-        {/* Fundo branco para contraste */}
-        {/* <rect width="180" height="60" fill="white"/> */}
-        {/* Barras do gráfico */}
-        <rect x="0" y="36" width="12" height="24" rx="3" fill="#0B4F4F" />
-        <rect x="18" y="24" width="12" height="36" rx="3" fill="#0B4F4F" />
-        <rect x="36" y="12" width="12" height="48" rx="3" fill="#0B4F4F" />
-        {/* Seta curva */}
-        <path d="M0 48 C15 10, 40 10, 60 24" stroke="#38C995" strokeWidth="4" fill="none" />
-        {/* Ponta da seta */}
-        <polygon points="60,24 56,16 70,19" fill="#38C995" />
+        {/* Barras do gráfico - bem grandes */}
+        <rect x="0" y="25" width="28" height="25" rx="5" fill="#0B4F4F" />
+        <rect x="38" y="8" width="28" height="42" rx="5" fill="#0B4F4F" />
+        <rect x="76" y="0" width="28" height="50" rx="5" fill="#0B4F4F" />
+        {/* Seta curva - mais proeminente */}
+        <path d="M0 40 C35 -15, 110 -15, 135 20" stroke="#38C995" strokeWidth="6" fill="none" />
+        {/* Ponta da seta - maior */}
+        <polygon points="135,20 128,8 148,14" fill="#38C995" />
       </svg>
       {showText && (
         <span
-          className="font-bold text-xl md:text-2xl leading-tight text-teal-800 dark:text-teal-200 select-none"
+          className={`font-bold leading-tight select-none ${textSizeClass}`}
           style={{
             fontFamily: 'Poppins, Arial, sans-serif',
             letterSpacing: '-0.02em',
-            fontWeight: 600,
-            textShadow: '0 1px 2px rgba(0,0,0,0.08)',
-            marginLeft: 4,
-            lineHeight: 1.1,
+            fontWeight: 700,
+            color: '#0B4F4F',
+            display: 'flex',
+            alignItems: 'center',
           }}
         >
-          Fluxo<span style={{ fontWeight: 400, marginLeft: 6 }}>Fácil</span>
+          Fluxo
+          <span
+            style={{
+              fontWeight: 400,
+              marginLeft: 8,
+              color: '#0B4F4F',
+            }}
+            className="font-normal"
+          >
+            Fácil
+          </span>
         </span>
       )}
     </div>

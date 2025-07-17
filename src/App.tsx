@@ -34,6 +34,7 @@ import AnalyticsTab from './components/AnalyticsTab';
 import SettingsTab from './components/SettingsTab';
 import LoadersTab from './components/LoadersTab';
 import Logo from './components/Logo';
+import ConnectionStatus from './components/ConnectionStatus';
 
 type TabType =
   | 'dashboard'
@@ -822,9 +823,15 @@ const App: React.FC = () => {
         <div className="container">
           {/* Header */}
           <div className="header-section">
-            <div className="header-content">
+            <div className="header-content flex items-center gap-4">
               <h1 className="app-title"><Logo size={40} showText /></h1>
-              <ThemeToggle />
+              <button
+                className="mobile-menu-toggle"
+                onClick={() => setMobileMenuOpen(true)}
+                aria-label="Abrir menu"
+              >
+                <IconMenu size={24} />
+              </button>
             </div>
           </div>
 
@@ -838,6 +845,8 @@ const App: React.FC = () => {
           <div className="sidebar-content">
             <div className="sidebar-header">
               <h3 className="sidebar-title"><Logo size={32} showText /></h3>
+              <ConnectionStatus className="mt-2 mb-2" />
+              <ThemeToggle />
             </div>
             <nav className="sidebar-nav">
               {navigationItems.map((item) => (
@@ -948,7 +957,6 @@ const App: React.FC = () => {
                   </div>
                   <span className="mobile-menu-panel-label">Documentações</span>
                 </button>
-                
                 <button
                   onClick={() => {
                     setActiveTab('ajuda');
@@ -961,7 +969,6 @@ const App: React.FC = () => {
                   </div>
                   <span className="mobile-menu-panel-label">Ajuda</span>
                 </button>
-                
                 <button
                   onClick={() => {
                     setActiveTab('configuracoes');
@@ -974,154 +981,16 @@ const App: React.FC = () => {
                   </div>
                   <span className="mobile-menu-panel-label">Configurações</span>
                 </button>
-                
-
               </div>
             </div>
           </div>
         )}
-
-        {/* Mobile Header */}
-        <div className="mobile-menu">
-          <div className="mobile-menu-header">
-            <button 
-              className="mobile-menu-toggle"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            >
-              <IconMenu size={24} />
-            </button>
-            <h1 className="mobile-app-title">App Contas Mensais</h1>
-            <ThemeToggle />
-          </div>
         </div>
-
-        {showForm && (
-          <TransactionForm
-            categories={categories}
-            onAddTransaction={handleAddTransaction}
-            onClose={() => {
-              setShowForm(false);
-              // Focar no botão flutuante após fechar o formulário
-              setTimeout(() => {
-                const fab = document.querySelector('.floating-action-button') as HTMLButtonElement;
-                if (fab) fab.focus();
-              }, 100);
-            }}
-          />
-        )}
-
-        {/* Botão Flutuante de Nova Transação */}
-        <button
-          onClick={() => {
-            // Solicitar permissão de notificação na primeira vez
-            if (notificationPermission === 'default') {
-              requestNotificationPermission();
-            }
-            setShowForm(true);
-          }}
-          className={`floating-action-button ${hasRecentTransactions ? 'pulse' : ''} ${showSuccessAnimation ? 'success' : ''}`}
-          title="Nova Transação"
-          aria-label="Adicionar nova transação"
-          style={{
-            position: 'fixed',
-            bottom: '24px',
-            right: '24px',
-            width: '56px',
-            height: '56px',
-            background: 'linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)',
-            color: 'white',
-            border: 'none',
-            borderRadius: '50%',
-            boxShadow: '0 4px 20px rgba(0, 0, 0, 0.3)',
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            zIndex: 100000,
-            fontSize: '24px'
-          }}
-        >
-          <IconPlus size={24} />
-          {hasPendingTransactions && (
-            <div className="floating-action-indicator">
-              <span className="indicator-dot"></span>
-            </div>
-          )}
-          {currentMonthTransactions > 10 && (
-            <div className="floating-action-counter">
-              {currentMonthTransactions}
-            </div>
-          )}
-        </button>
-        
-        {/* Tooltip do botão flutuante */}
-        <div className="floating-action-container">
-          <div className="floating-action-tooltip">
-            <div className="tooltip-content">
-              <span>
-                {hasPendingTransactions 
-                  ? `Nova Transação (${transactions.filter(t => !t.category).length} pendentes)`
-                  : currentMonthTransactions > 0
-                  ? `Nova Transação (${currentMonthTransactions} este mês)`
-                  : 'Nova Transação'
-                }
-              </span>
-              <span className="tooltip-shortcut">N</span>
-            </div>
-          </div>
-        </div>
-
-        {showForm && (
-          <TransactionForm
-            categories={categories}
-            onAddTransaction={handleAddTransaction}
-            onClose={() => {
-              setShowForm(false);
-              // Focar no botão flutuante após fechar o formulário
-              setTimeout(() => {
-                const fab = document.querySelector('.floating-action-button') as HTMLButtonElement;
-                if (fab) fab.focus();
-              }, 100);
-            }}
-          />
-        )}
-
-        {showForm && activeTab === 'contas' && (
-          <ContaForm
-            onClose={() => setShowForm(false)}
-          />
-        )}
-
-        {/* Recebido Form */}
-        {showRecebidoForm && (
-          <div style={{ zIndex: 100000 }}>
-            <RecebidoForm
-              recebido={editingRecebido}
-              onSave={handleSaveRecebido}
-              onCancel={() => {
-                setShowRecebidoForm(false);
-                setEditingRecebido(null);
-              }}
-            />
-          </div>
-        )}
-
-        {/* Toast de Sucesso */}
-        {showSuccessToast && (
-          <div className="fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-[10001] transform transition-all duration-300 animate-in slide-in-from-right">
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
-              <span className="font-medium">Transação adicionada!</span>
-            </div>
-            <p className="text-sm opacity-90 mt-1">{successMessage}</p>
-          </div>
-        )}
       </div>
-    </div>
         </RecebidosProvider>
       </ContasProvider>
     </ThemeProvider>
   );
 };
 
-export default App; 
+export default App;

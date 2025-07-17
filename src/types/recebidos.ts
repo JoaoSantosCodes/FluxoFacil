@@ -9,4 +9,15 @@ export interface Recebido {
   observacoes?: string;
   data_criacao?: string;
   data_atualizacao?: string;
+}
+
+export interface EstatisticasRecebidos {
+  totalRecebidos: number;
+  recebidosConfirmados: number;
+  recebidosPendentes: number;
+  recebidosAtrasados: number;
+  valorTotal: number;
+  valorRecebido: number;
+  valorPendente: number;
+  valorAtrasado: number;
 } 
